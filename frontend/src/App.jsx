@@ -1,6 +1,6 @@
 import Navbar from "./components/Navbar";
 
-import HomePage from "./pages/HomePage";
+import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import SettingsPage from "./pages/SettingsPage";
@@ -38,7 +38,7 @@ const App = () => {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
+        <Route path="/" element={authUser ? <MainPage /> : <Navigate to="/login" />} />
         <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/settings" element={<SettingsPage />} />
