@@ -3,7 +3,7 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const BASE_URL = "https://stratum.rexit.live/chat/api"
+const SOCKET_URL = "https://stratum.rexit.live"; // ✅ Backend domain for Socket.IO
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -86,19 +86,35 @@ export const useAuthStore = create((set, get) => ({
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
 
-    const socket = io(BASE_URL, {
+    const socket = io(SOCKET_URL, {
       query: {
         userId: authUser._id,
       },
     });
+    
     socket.connect();
 
     set({ socket: socket });
 
+    // Debug logs
+    socket.on("connect", () => {
+      console.log("✅ Socket connected:", socket.id);
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("❌ Socket connection error:", error);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("❌ Socket disconnected");
+    });
+
     socket.on("getOnlineUsers", (userIds) => {
+      console.log("👥 Online users:", userIds);
       set({ onlineUsers: userIds });
     });
   },
+  
   disconnectSocket: () => {
     if (get().socket?.connected) get().socket.disconnect();
   },
