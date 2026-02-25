@@ -3,7 +3,7 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "https://stratum.rexit.live"; // ✅ Backend domain for Socket.IO
+const SOCKET_URL = "https://stratum.rakshit.online"; // ✅ Backend domain for Socket.IO
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
